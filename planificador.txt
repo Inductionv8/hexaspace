@@ -6,3 +6,6 @@ Viernes 11/09/2015:
     * Hacer la template del lobby.
     * Poder crear una partida vacía.
     * Poder unirse a la partida creada.
+
+Tareas agregadas del Viernes 11/09/2015:
+    * Arreglar el problema de los templates que no los reconoce.
