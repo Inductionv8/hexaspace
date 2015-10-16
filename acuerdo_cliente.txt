@@ -1,0 +1,73 @@
+Proyecto OpenSource:   HexaSpace
+
+Bueno el nombre es debatible… es lo de menos. De momento es HexaSpace.
+
+
+La idea es representar el catán con la expansión… Para que más de 4 puedan jugar . Como es un juego que ya está creado, de seguro que va a haber derechos de autor. Por eso que hay que cambiarlo.
+
+La temática puede ser (Se pueden agregar ideas):
+Espacio. 
+1° Donde cada recurso (ya sea trigo, piedra, loza, oveja, madera y desierto). Será representado como un planeta del color del recurso…).
+2° Cada settlement va a ser una nave,
+3° Cada city será una nave de batalla…( O cualquier cosa que sea mas groso que una nave),
+4° En vez de camino, se hacen flechas que conectan naves para mandar los materiales para hacer una nueva nave, 
+5° Al igual que en catán se necesitan 2 tubos (caminos) para poder hacer 1 nave,
+6° La idea es que siga siendo en hexágono para poder seguir con la misma estrategia…
+7° Los puertos son portales que comunican con el mercado (Norte, compran chizitos) vía hipersonido (Alguna velocidad más rápida que la luz hiperluz).
+
+Tema de la expansión:
+
+Este tema está a SUPER debate, porque hay que ver como hacer para agregar recursos, desiertos, settlement, city’s, caminos y puntos de victoria acorde a la cantidad de jugadores. Y con cuantos puntos se gana.
+Es decir: hay que establecer proporciones que sean “Lógicas” para la cantidad de jugadores.
+
+-Luca: Sugiero que desde los 2 a 4 jugadores mantengamos las cosas como están en el mismo catan. Y evaluemos para cuando sean 5 a 8.
+
+
+Cosas a debatir:
+
+¿Cuantos jugadores máximo, o se ingresa la cantidad de jugadores?
+Habrá una sala para crear partidas. En la sala se dice cuántos jugadores van a participar. Y hasta que no se llene no comienza. La cantidad de los jugadores será mínimo de 2(dos) jugadores, máximo de 8 (ocho) jugadores.
+
+Afirmaciones boludas!:  y aumentan de a 1. Osea 2,3,4,...,7,8.
+
+Las salas de 1 (una) sola persona, están prohibidas para jugar. Hay que esperar al menos 2 personas.
+
+
+
+Cerrando con la idea de hacer la SRS. Empezamos a discutir cosas del diseño:
+
+En el juego del truco, lo que nosotros hicimos fue constantemente hacer requests a la base de datos. Preguntando si José, Juan o Alberto habían jugado. Lo cual crea un overhead de la concha de la lora y genera que se sobrecargue la base de datos. (Al pedo)
+
+Entonces, lo que nosotros podemos hacer:
+La base de datos, solo sirva para almacenar información y no sea un método de constatar si jugó o no jugó otro jugador. Lo que se puede hacer, es que cada vez que un jugador MODIFICO la base de datos (El jugador no debería modificar la base de datos)(para jugar), lo que hace es levantar una señal que hace que avise que todos los otros jugadores deba actualizar la pagina, o en java hacer su animación respectiva.
+Similar a como funcionan los polls en redes.
+
+Lo que se hace es un sistema de turnos, pero que ese sistema de turnos no genere cambios en la base de datos, es al pedo eso. Bueno, si, los recursos si los tenés que poner en una base de datos, pero es distinto. Digamos, la base de datos contendra, en primera instancia, 1 sola carta de cada tipo. Luego, cada jugador tendra sus cartitas
+Mira…
+Si hacemos la estructura de la página en django, y juego en nose java? o javascript? que la estructura solamente le pase por input los usuarios y los turnos al principio. y que sea como una caja negra, que devuelva solamente el ganador?(solo una idea)
+
+Hacemos las salas, lobby y todo eso en django, pero que el juego sea en java. Java es una caja negra (no importa lo que haga) toma jugadores y devuelve 1 ganador Vos decís que en Java se haga todo el jugado no?.
+Si es que resulta mas facil………..Igual falta bastante.
+
+Por lo pronto fijemos metas ahora. YA! No borres… Todo esto se edita y lo dejamos como documentación.
+
+-Para quien?
+ Para nosotros!
+
+Lo que yo hice en el truco, fue que la base de dato solo tenía las cartas y los usuarios, como jugaban o no, era tema de los jugadores. También mantenía las pocas cartas a tiempo real de los usuarios. Mi base de dato no colapsó nunca.
+
+-En fin escuchate lo que quiero decir, asi ya queda para los otros panchos que se quieran sumar.
+
+
+Bueno en fin.
+
+
+
+
+Metas que tenemos que hacer: Y que son las más inmediatas y faciles de hacer.
+
+1 Hacer un sistema de autenticación. 
+2 Hacer un objeto llamado jugador. El jugador puede tener un perfil, o lo que sea (eso para después). El jugador debe poseer:
+	Bigote, capa, monóculo y sombrero.
+3 Hacer template para lobby, donde liste todas las partidas que ya están creadas.
+4 Crear partida y dejar que se unan gente.
