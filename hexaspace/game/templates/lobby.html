@@ -1,6 +1,19 @@
 <html>
 <p>HOLA AL LOBBY</p>
 {{state}}
+    <table>
+        <tr>
+            <th>Nombre y VP</th>
+            <th>Nombre y VP</th>
+            <th>Nombre y VP</th>
+            <th>Nombre y VP</th>
+        </tr>
+        <tr>
+            {% for jugador in partida %}
+                <td>{{jugador.nombre}}: {{jugador.puntos_victoria}}</td>
+            {% endfor %}
+        </tr>
+    </table>
     <form action="/lobby/" method="get">
         <button name="crear"> CrearPartida </button>
     </form>

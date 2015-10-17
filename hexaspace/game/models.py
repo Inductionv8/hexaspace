@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 
 class Jugador(models.Model):
     nombre = models.CharField(default="",max_length=10)
