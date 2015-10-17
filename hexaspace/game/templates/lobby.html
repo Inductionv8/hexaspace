@@ -1,20 +1,39 @@
 <html>
-<p>HOLA AL LOBBY</p>
-{{state}}
-    <table>
-        <tr>
-            <th>Nombre y VP</th>
-            <th>Nombre y VP</th>
-            <th>Nombre y VP</th>
-            <th>Nombre y VP</th>
-        </tr>
-        <tr>
-            {% for jugador in partida %}
-                <td>{{jugador.nombre}}: {{jugador.puntos_victoria}}</td>
-            {% endfor %}
-        </tr>
+    <table border="1">
+        <th>
+        Datos del Jugador:
+        <form action="/lobby/" method="get">
+            <button name="crear"> Crear Partida </button>
+            <button name="jugar"> Jugar Partida </button>
+        </form>
+        </th>
+        <th>
+            Datos de Partidas:
+            <table border="1">
+                <!-- Ejemplo de una partida creada -->
+                <tr>
+                    {% for jugador in partida %}
+                    <td>{{jugador.nombre}}</td>
+                    {% endfor %}
+                    <td>
+                    <form action="/lobby/" method="get">
+                    <button name="crear"> Unirse </button>
+                    </form>
+                    </td>
+                </tr>
+                <!-- Ejemplo de otra partida creada -->
+                <tr>
+                    {% for jugador in partida %}
+                    <td>{{jugador.nombre}}</td>
+                    {% endfor %}
+                    <td>
+                    <form action="/lobby/" method="get">
+                    <button name="crear"> Unirse </button>
+                    </form>
+                    </td>
+                </tr>
+
+            </table>
+        </th>
     </table>
-    <form action="/lobby/" method="get">
-        <button name="crear"> CrearPartida </button>
-    </form>
 </html>
