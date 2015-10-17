@@ -9,16 +9,20 @@ def homepage(request):
     """
     Si hay algun usuario, lo redirige a la homepage para que se loguee.
     """
-    return render_to_response('main.html')
+    state = "Bienvenido a HexaSpace."
+    if 'usuario' in request.GET:
+        usuario = request.GET.get('usuario')
+        if not Jugador.objects.filter(nombre=usuario).exists():
+            jugador = Jugador()
+            jugador.nombre = usuario
+            jugador.save()
+            return HttpResponseRedirect('lobby')
+        else:
+            state = "El nombre de usuario ya existe. Elije otro."
+    return render_to_response('main.html',{'state':state})
 
 def lobby(request):
     state = "No hay estado"
-    usuario = ""
-    if 'usuario' in request.GET:
-        usuario = request.GET.get('usuario')
-        jugador = Jugador()
-        jugador.nombre = usuario
-        state = jugador.nombre
-    elif 'crear' in request.GET:
+    if 'crear' in request.GET:
         state = "EL JUGADOR QUIZO CREAR JAJA"
     return render_to_response('lobby.html',{'state':state})
