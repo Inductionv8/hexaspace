@@ -2,6 +2,7 @@
     <table border="1">
         <th>
         Datos del Jugador:
+        {{NombreUsuario}}
         <form action="/lobby/" method="get">
             <button name="crear"> Crear Partida </button>
             <button name="jugar"> Jugar Partida </button>
@@ -11,28 +12,6 @@
             Datos de Partidas:
             <table border="1">
                 <!-- Ejemplo de una partida creada -->
-                <tr>
-                    {% for jugador in partida %}
-                    <td>{{jugador.nombre}}</td>
-                    {% endfor %}
-                    <td>
-                    <form action="/lobby/" method="get">
-                    <button name="crear"> Unirse </button>
-                    </form>
-                    </td>
-                </tr>
-                <!-- Ejemplo de otra partida creada -->
-                <tr>
-                    {% for jugador in partida %}
-                    <td>{{jugador.nombre}}</td>
-                    {% endfor %}
-                    <td>
-                    <form action="/lobby/" method="get">
-                    <button name="crear"> Unirse </button>
-                    </form>
-                    </td>
-                </tr>
-
             </table>
         </th>
     </table>
