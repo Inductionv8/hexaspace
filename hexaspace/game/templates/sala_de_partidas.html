@@ -2,35 +2,44 @@
     <table border="1">
         <th>
         Datos del Jugador:
-        {{NombreUsuario}}
-        <form action="/sala_de_partidas/" method="get">
-            <button name="crear_button"> Crear Partida </button>
-            <button name="jugar_button"> Jugar Partida </button>
-        </form>
+        {{NombreUsuario}}</br>
+        <button onclick='showMenu()' >Crear Partida</button>
+            <ul id="menu" style="display:none">
+                <form action="/sala_de_partidas/" method="get">
+                    <input type="radio" name="max_cantidad_jugadores" value=2>Máximo 2 Jugadores</input></br>
+                    <input type="radio" name="max_cantidad_jugadores" value=3>Máximo 3 Jugadores</input></br>
+                    <input type="radio" name="max_cantidad_jugadores" value=4>Máximo 4 Jugadores</input></br>
+                    <input type="submit" name"submit" value="Aceptar"/>
+            </ul>
+                    <script type="text/javascript">
+                     function showMenu(){
+                            document.getElementById("menu").style.display="block";
+                             }
+                     function hideMenu(){
+                            document.getElementById("menu").style.display="none";
+                             }
+                    </script>
+                    <button name="jugar_button"> Jugar Partida </button>
+                </form>
         </th>
         <th>
             Datos de Partidas:
             <table border="1">
                 <!-- Ejemplo de una partida creada -->
-                <tr>
-                    <th>
-                         {{NombreUsuario}}
-                    </th>
-                    <th>
-                         {{NombreUsuario}}
-                    </th>
-                    <th>
-                         {{NombreUsuario}}
-                    </th>
-                    <th>
-                         {{NombreUsuario}}
-                    </th>
-                    <th>
-                    <form action="/sala_de_partidas/" method="get">
-                         <button name="unirse_partida"> Unirse </button>
-                    </form>
-                    </th>
-                </tr>
+                {% for partida in lista_partidas %}
+                    <tr>
+                        {% for jugador in partida %}
+                            <td>
+                                {{jugador.nombre}}
+                            </td>
+                        {% endfor %}
+                        <td>
+                            <form action="/sala_de_partidas/" method="get">
+                                 <button name="unirse_partida"> Unirse </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
             </table>
         </th>
     </table>

@@ -20,6 +20,7 @@ def registrar_usuario(request):
     nombre_usuario = request.GET.get('usuario_text')
     password_usuario = request.GET.get('password_text')
     
+    # Vemos si el nombre de usuario ya existe.
     if not User.objects.filter(username=nombre_usuario).exists():
         usuario = User.objects.create_user(nombre_usuario, "", password_usuario)
         usuario.save()
@@ -30,15 +31,24 @@ def registrar_usuario(request):
     return HttpResponseRedirect('/')
     
 def loguear_usuario(request):
+    """
+        Se puede ingresar a esta view a traves del hipervinculo en el main.html
+        o porque el usuario a hecho clicl en 'aceptar' dentro de la pagina del
+        login.
+    """
+    # Vemos si se ingreso al logueo.
     if not 'usuario' in request.GET:
         state = "Por favor, ingrese nombre de usuario y clave."
         return render_to_response('loguear_usuario.html',{'state':state})
+    # Ahora veamos si el usuario ingreso nombre de usuario y clave.
     if not 'clave' in request.GET:
         state = "Por favor ingrese la clave."
         return render_to_response('loguear_usuario.html',{'state':state})
+    # Autenticamos al usuario.
     usuario = request.GET.get('usuario')
     clave = request.GET.get('clave')
     user = authenticate(username=usuario, password=clave)
+    # Logueamos al usuario siempre y cuando se haya autenticado.
     if user is not None:
         if user.is_active:
             login(request,user)
@@ -46,11 +56,16 @@ def loguear_usuario(request):
 
 def sala_de_partidas(request):
     user = get_user(request)
-    if 'crear_button' in request.GET:
+    lista_partidas = []     # Es un array de array de Jugadores --> [[jugadores]]
+    if 'max_cantidad_jugadores' in request.GET:
         # Creo Partida
         nueva_partida = Partida()
         nueva_partida.save()
         # Obtener el Usuario actual       
         jugador = Jugador(partida_id=nueva_partida,usuario_id=user,nombre=user.username)
         jugador.save()
-    return render_to_response('sala_de_partidas.html',{'NombreUsuario':user.username})
+    # Creamos una lista de partidas que se mostrara en la sala de partidas.
+    for partida in list(Partida.objects.all()):
+        lista_partidas.append(list(Jugador.objects.filter(partida_id=partida)))
+
+    return render_to_response('sala_de_partidas.html', {'lista_partidas':lista_partidas})
