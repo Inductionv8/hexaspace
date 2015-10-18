@@ -29,6 +29,21 @@ def registrar_usuario(request):
 
     return HttpResponseRedirect('/')
     
+def loguear_usuario(request):
+    if not 'usuario' in request.GET:
+        state = "Por favor, ingrese nombre de usuario y clave."
+        return render_to_response('loguear_usuario.html',{'state':state})
+    if not 'clave' in request.GET:
+        state = "Por favor ingrese la clave."
+        return render_to_response('loguear_usuario.html',{'state':state})
+    usuario = request.GET.get('usuario')
+    clave = request.GET.get('clave')
+    user = authenticate(username=usuario, password=clave)
+    if user is not None:
+        if user.is_active:
+            login(request,user)
+    return HttpResponseRedirect("/sala_de_partidas/")
+
 def sala_de_partidas(request):
     user = get_user(request)
     if 'crear_button' in request.GET:
