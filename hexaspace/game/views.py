@@ -11,21 +11,24 @@ def pagina_principal(request):
     usuario para empezar a jugar. Si el nombre de usuario existe
     entonces le muestra un mensaje de alerta.
     """
-    state = "Bienvenido a HexaSpace."
+    return render_to_response('main.html')
 
-    if 'usuario_text' in request.GET:
-        nombre_usuario = request.GET.get('usuario_text')
-        print nombre_usuario
-        if not User.objects.filter(username=nombre_usuario).exists():
-            usuario = User.objects.create_user(nombre_usuario, "", "")
-            usuario.save()
-            validated = authenticate(username=nombre_usuario, password="")
-            login(request, validated)
-            return HttpResponseRedirect('sala_de_partidas')
-        else:
-            state = "El nombre de usuario ya existe. Elije otro."
-    return render_to_response('main.html',{'state':state})
+def registrar_usuario(request):
+    if not 'usuario_text' in request.GET:
+        return render_to_response('registrar_usuario.html')
 
+    nombre_usuario = request.GET.get('usuario_text')
+    password_usuario = request.GET.get('password_text')
+    
+    if not User.objects.filter(username=nombre_usuario).exists():
+        usuario = User.objects.create_user(nombre_usuario, "", password_usuario)
+        usuario.save()
+    else:
+        mensaje = "El nombre de usuario ya existe"
+        return render_to_response('registrar_usuario.html',{'mostrar_mensaje':mensaje})
+
+    return HttpResponseRedirect('/')
+    
 def sala_de_partidas(request):
     user = get_user(request)
     if 'crear_button' in request.GET:

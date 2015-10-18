@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'game.views.pagina_principal'),
     url(r'^sala_de_partidas/', 'game.views.sala_de_partidas'),
+    url(r'^registrar_usuario/', 'game.views.registrar_usuario'),
 ]
