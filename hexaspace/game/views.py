@@ -5,20 +5,6 @@ from django.http import HttpResponseRedirect
 from game.models import *
 # Create your views here.
 
-def lobby_table():
-    """
-    Tabla con 4 jugadores de prueba para tener algo
-    """
-    jugador1 = Jugador()
-    jugador2 = Jugador()
-    jugador3 = Jugador()
-    jugador4 = Jugador()
-    jugador1.nombre = "PrimerJugador"
-    jugador2.nombre = "SegundoJugador"
-    jugador3.nombre = "TercerJugador"
-    jugador4.nombre = "CuartoJugador"
-    return [jugador1,jugador2,jugador3,jugador4]
-
 def homepage(request):
     """
     Pagina principal, con posibilidad de ingresar un nombre de 
@@ -26,22 +12,34 @@ def homepage(request):
     entonces le muestra un mensaje de alerta.
     """
     state = "Bienvenido a HexaSpace."
+    print get_user(request)          #Debugging Line
     if 'usuario' in request.GET:
         usuario = request.GET.get('usuario')
-        if not Jugador.objects.filter(nombre=usuario).exists():
-            jugador = Jugador()
-            jugador.nombre = usuario
-            jugador.save()
+        if not User.objects.filter(username=usuario).exists():
+            user = User.objects.create_user(usuario, "", "")
+            user.save()
+            myuser = authenticate(username=usuario, password="")
+            # Init Debugging Lines
+            if myuser is not None:
+                print "ENTROOO!"
+                if myuser.is_active:
+                    print "ESACITVO"
+                    login(request, myuser)
+            # End Debugging Lines
             return HttpResponseRedirect('lobby')
         else:
             state = "El nombre de usuario ya existe. Elije otro."
     return render_to_response('main.html',{'state':state})
 
 def lobby(request):
-    state = "Cree su propia partida, o unase a alguna."
-    partida = lobby_table()
+    user = get_user(request)
+    print "user en lobby:"
+    print user
     if 'crear' in request.GET:
-        state = "Partida Creada, esperando oponentes."
-    return render_to_response('lobby.html',{'state':state,
-                                            'partida':partida
-                                            })
+        # Creo Partida
+        nueva_partida = Partida()
+        nueva_partida.save()
+        # Obtener el Usuario actual       
+        jugador = Jugador(partida_id=nueva_partida,usuario_id=user,nombre=user.username)
+        jugador.save()
+    return render_to_response('lobby.html',{'NombreUsuario':user.username})
