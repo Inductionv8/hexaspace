@@ -18,6 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'game.views.homepage'),
-    url(r'^lobby/', 'game.views.lobby'),
+    url(r'^$', 'game.views.pagina_principal'),
+    url(r'^sala_de_partidas/', 'game.views.sala_de_partidas'),
 ]

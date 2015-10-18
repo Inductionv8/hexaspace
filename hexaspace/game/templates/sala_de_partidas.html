@@ -1,0 +1,37 @@
+<html>
+    <table border="1">
+        <th>
+        Datos del Jugador:
+        {{NombreUsuario}}
+        <form action="/sala_de_partidas/" method="get">
+            <button name="crear_button"> Crear Partida </button>
+            <button name="jugar_button"> Jugar Partida </button>
+        </form>
+        </th>
+        <th>
+            Datos de Partidas:
+            <table border="1">
+                <!-- Ejemplo de una partida creada -->
+                <td>
+                    <th>
+                         {{NombreUsuario}}
+                    </th>
+                    <th>
+                         {{NombreUsuario}}
+                    </th>
+                    <th>
+                         {{NombreUsuario}}
+                    </th>
+                    <th>
+                         {{NombreUsuario}}
+                    </th>
+                    <th>
+                    <form action="/sala_de_partidas/" method="get">
+                         <button name="unirse_partida"> Unirse </button>
+                    </form>
+                    </th>
+                </td>
+            </table>
+        </th>
+    </table>
+</html>
