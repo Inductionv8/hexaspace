@@ -1,10 +1,10 @@
 Archivo que se usará para el planeamiento de las tareas:
 
 Viernes 11/09/2015:
-    * Hacer un sistema de autentificación.
+    * Hacer un sistema de autentificación. (LISTO)!
     * Hacer el modelo del Jugador.
-    * Hacer la template del lobby.
-    * Poder crear una partida vacía.
+    * Hacer la template del lobby. (LISTO)!
+    * Poder crear una partida vacía. (LISTO)!
     * Poder unirse a la partida creada.
 
 Tareas agregadas del Viernes 11/09/2015:
