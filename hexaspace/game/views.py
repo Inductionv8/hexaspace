@@ -36,9 +36,9 @@ def loguear_usuario(request):
         o porque el usuario a hecho clicl en 'aceptar' dentro de la pagina del
         login.
     """
+    state = "Por favor, ingrese nombre de usuario y clave."
     # Vemos si se ingreso al logueo.
     if not 'usuario' in request.GET:
-        state = "Por favor, ingrese nombre de usuario y clave."
         return render_to_response('loguear_usuario.html',{'state':state})
     # Ahora veamos si el usuario ingreso nombre de usuario y clave.
     if not 'clave' in request.GET:
@@ -52,18 +52,33 @@ def loguear_usuario(request):
     if user is not None:
         if user.is_active:
             login(request,user)
-    return HttpResponseRedirect("/sala_de_partidas/")
+        return HttpResponseRedirect("/sala_de_partidas/")
+    state = state + " El usuario no esta registrado."
+    return render_to_response('loguear_usuario.html',{'state':state})
+
+
 
 def sala_de_partidas(request):
+    """
+        gid es el id de la partida a la cual se quiere unir, sera None si no hay partida.
+    """
     user = get_user(request)
     lista_partidas = []     # Es un array de array de Jugadores --> [[jugadores]]
     if 'max_cantidad_jugadores' in request.GET:
         # Creo Partida
         nueva_partida = Partida()
         nueva_partida.save()
-        # Obtener el Usuario actual       
+        # Creao al jugador en base al usuario actual
         jugador = Jugador(partida_id=nueva_partida,usuario_id=user,nombre=user.username)
         jugador.save()
+        return HttpResponseRedirect("/sala_de_partidas/")
+    if 'unirse_partida' in request.GET:
+        id_partida_actual = request.GET.get('partida_a_unirse')
+        partida_actual = Partida.objects.get(id=id_partida_actual) #Es la partida a la cual se quieren unir
+        jugador = Jugador(partida_id=partida_actual, usuario_id=user,nombre=user.username)
+        jugador.save()
+        return HttpResponseRedirect("/sala_de_partidas/")
+
     # Creamos una lista de partidas que se mostrara en la sala de partidas.
     for partida in list(Partida.objects.all()):
         lista_partidas.append(list(Jugador.objects.filter(partida_id=partida)))

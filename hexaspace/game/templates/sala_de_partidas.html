@@ -1,6 +1,6 @@
 <html>
     <table border="1">
-        <th>
+       <th>
         Datos del Jugador:
         {{NombreUsuario}}</br>
         <button onclick='showMenu()' >Crear Partida</button>
@@ -31,11 +31,13 @@
                         {% for jugador in partida %}
                             <td>
                                 {{jugador.nombre}}
+                                <!-- Partida_id es ForeignKey a Partida {{jugador.partida_id.id}} -->
                             </td>
+                            <form action="/sala_de_partidas/" method="get">
+                                <input type="hidden" name="partida_a_unirse" value={{jugador.partida_id.id}} />
                         {% endfor %}
                         <td>
-                            <form action="/sala_de_partidas/" method="get">
-                                 <button name="unirse_partida"> Unirse </button>
+                             <button name="unirse_partida"> Unirse </button>
                             </form>
                         </td>
                     </tr>

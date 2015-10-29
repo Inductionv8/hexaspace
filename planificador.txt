@@ -9,3 +9,15 @@ Viernes 11/09/2015:
 
 Tareas agregadas del Viernes 11/09/2015:
     * Arreglar el problema de los templates que no los reconoce. (LISTO)!
+
+Martes 27/10/2015:
+    * Ver que se restrinja el logueo a quien no esta registrado.
+    * Hacer que se encripte la password a la hora de ingresarla.
+    * Hacer que el usuario pueda borrar su cuenta.
+    * Hacer que el usuario pueda desloguearse.
+    * Hacer que el mensaje de usuario no registrado aparezca y desaparezca.
+    * Cuando haya un juego, hacer que el jugador pueda abandonar.
+    * Hacer que se actualicen todas las paginas. Mostrar cada jugador que va ingresando a la 
+    partida.
+
+
