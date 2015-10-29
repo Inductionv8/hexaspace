@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^registrar_usuario/', 'game.views.registrar_usuario'),
     url(r'^loguear_usuario/' , 'game.views.loguear_usuario'),
     url(r'^sala_de_partidas/', 'game.views.sala_de_partidas'),
+    url(r'^mesa/(\d+)/$', 'game.views.mesa'),
 ]
