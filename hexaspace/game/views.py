@@ -66,12 +66,13 @@ def sala_de_partidas(request):
     lista_partidas = []     # Es un array de array de Jugadores --> [[jugadores]]
     if 'max_cantidad_jugadores' in request.GET:
         # Creo Partida
-        nueva_partida = Partida()
-        nueva_partida.save()
-        # Creao al jugador en base al usuario actual
-        jugador = Jugador(partida_id=nueva_partida,usuario_id=user,nombre=user.username)
-        jugador.save()
-        return HttpResponseRedirect("/sala_de_partidas/")
+        if not Jugador.objects.filter(usuario_id=user).exists():
+            nueva_partida = Partida()
+            nueva_partida.save()
+            # Creao al jugador en base al usuario actual
+            jugador = Jugador(partida_id=nueva_partida,usuario_id=user,nombre=user.username)
+            jugador.save()
+            return HttpResponseRedirect("/sala_de_partidas/")
     if 'unirse_partida' in request.GET:
         id_partida_actual = request.GET.get('partida_a_unirse')
         partida_actual = Partida.objects.get(id=id_partida_actual) #Es la partida a la cual se quieren unir
